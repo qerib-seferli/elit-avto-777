@@ -321,14 +321,21 @@ select option { color: #111; }
 
 .brands-section {
   width: 100%;
-  overflow: hidden;
   margin: 10px 0 16px;
+  overflow: hidden;
 }
 
 .brands-marquee {
   width: 100%;
-  overflow: hidden;
-  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.brands-marquee::-webkit-scrollbar {
+  display: none;
 }
 
 .brands-track {
@@ -373,13 +380,6 @@ select option { color: #111; }
   pointer-events: none;
 }
 
-.brand-chip:hover,
-.brand-chip:active {
-  border-color: #E30A17;
-  box-shadow: 0 0 12px rgba(227, 10, 23, 0.35);
-  transform: translateY(-2px);
-}
-
 @keyframes brandScroll {
   0% {
     transform: translateX(0);
@@ -389,12 +389,10 @@ select option { color: #111; }
   }
 }
 
-/* istəyə görə mouse gətiriləndə dayansın */
-.brands-marquee:hover .brands-track {
-  animation-play-state: paused;
-}
-
-.brands-marquee:active .brands-track {
+/* mouse və toxunuş zamanı animasiya dayansın */
+.brands-marquee:hover .brands-track,
+.brands-marquee:active .brands-track,
+.brands-marquee.dragging .brands-track {
   animation-play-state: paused;
 }
 
