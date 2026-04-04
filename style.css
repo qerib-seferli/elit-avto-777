@@ -394,6 +394,10 @@ select option { color: #111; }
   animation-play-state: paused;
 }
 
+.brands-marquee:active .brands-track {
+  animation-play-state: paused;
+}
+
 @media (max-width: 768px) {
   .brands-track {
     gap: 8px;
