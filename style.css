@@ -425,7 +425,7 @@ select option { color: #111; }
 
 
 @media (max-width: 980px) {
-  .cards-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .cards-grid, .mobile-cards-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
   .profile-grid, .admin-grid, .detail-card { grid-template-columns: 1fr; }
 }
 
