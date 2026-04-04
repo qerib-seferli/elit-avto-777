@@ -787,12 +787,37 @@ async function initAdmin() {
 
 
 
+
 async function init() {
   markActiveNav();
-  await renderHomeHeaderAuth();
+  async function renderHomeHeaderAuth() {
+  const btn = qs('#homeAuthBtn');
+  if (!btn) return;
 
+  const user = await getSessionUser();
+
+  if (!user) {
+    btn.href = 'login.html';
+    btn.innerHTML = `<i class="fa-regular fa-user"></i><span>Giriş</span>`;
+    return;
+  }
+
+  const profile = await getProfile(user.id);
+  const displayName =
+    [profile?.name, profile?.surname].filter(Boolean).join(' ').trim() ||
+    user.user_metadata?.name ||
+    user.email?.split('@')[0] ||
+    'Profil';
+
+  if (profile?.role === 'admin') {
+    btn.href = 'admin.html';
+    btn.innerHTML = `<i class="fa-solid fa-shield-halved"></i><span>${displayName}</span>`;
+  } else {
+    btn.href = 'profile.html';
+    btn.innerHTML = `<i class="fa-regular fa-user"></i><span>${displayName}</span>`;
+  }
+}
   const page = getPage();
-
   if (page === 'home') await initHome();
   if (page === 'login') await initLogin();
   if (page === 'profile') await initProfile();
@@ -801,6 +826,7 @@ async function init() {
   if (page === 'messages') await initMessages();
   if (page === 'admin') await initAdmin();
 }
+
 
 
 
