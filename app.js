@@ -145,36 +145,71 @@ async function uploadFile(bucket, file, path) {
 function createCard(item, favoriteIds = []) {
   const images = Array.isArray(item.images) && item.images.length ? item.images : ['foto/car-placeholder.jpg'];
   const isFav = favoriteIds.includes(item.id);
+
+  const conditionText =
+    item.condition === 'new' ? 'Yeni' :
+    item.condition === 'used' ? 'Sürülmüş' :
+    (item.condition || 'Sürülmüş');
+
   return `
-    <article class="card" data-id="${item.id}">
+    <article class="card listing-card" data-id="${item.id}">
       <div class="card-media" data-slider='${JSON.stringify(images)}'>
         <img src="${images[0]}" alt="${item.brand} ${item.model}">
-        <div class="card-topbadges">
-          <div class="icon-row">
-            ${item.is_credit ? '<span class="badge"><i class="fa-solid fa-wallet"></i> Kredit</span>' : ''}
-            ${item.is_barter ? '<span class="badge"><i class="fa-solid fa-arrow-right-arrow-left"></i> Barter</span>' : ''}
-          </div>
-          <button class="favorite-btn ${isFav ? 'active' : ''}" data-fav="${item.id}" type="button"><i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i></button>
+        
+        <div class="card-topbadges card-topfav-only">
+          <button class="favorite-btn ${isFav ? 'active' : ''}" data-fav="${item.id}" type="button">
+            <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
+          </button>
         </div>
-        <div class="slide-dots">${images.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}</div>
+
+        <div class="slide-dots">
+          ${images.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}
+        </div>
       </div>
-      <div class="card-body">
-        <div class="price-row">
-          <div>
-            <div class="price">${fmt(item.price, item.currency)}</div>
-            <div class="card-title">${item.brand} ${item.model}</div>
-          </div>
-          <span class="badge">${item.condition || '-'}</span>
+
+      <div class="card-body listing-card-body">
+        <div class="listing-main-text">
+          <div class="price">${fmt(item.price, item.currency)}</div>
+          <div class="card-title">${item.brand} ${item.model}</div>
         </div>
-        <div class="specs">
+
+        <div class="listing-flags">
+          <span class="listing-flag condition-flag">
+            <i class="fa-solid fa-car-side"></i> ${conditionText}
+          </span>
+
+          ${item.is_credit ? `
+            <span class="listing-flag credit-flag">
+              <i class="fa-solid fa-wallet"></i> Kredit
+            </span>
+          ` : ''}
+
+          ${item.is_barter ? `
+            <span class="listing-flag barter-flag">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i> Barter
+            </span>
+          ` : ''}
+        </div>
+
+        <div class="specs compact-specs">
           <div class="spec"><small>Mühərrik</small><strong>${item.engine || '-'}</strong></div>
           <div class="spec"><small>Yürüş</small><strong>${Number(item.mileage || 0).toLocaleString('az-AZ')} km</strong></div>
           <div class="spec"><small>İl</small><strong>${item.year || '-'}</strong></div>
           <div class="spec"><small>Yanacaq</small><strong>${item.fuel_type || '-'}</strong></div>
         </div>
-        <div class="card-footer">
-          <a class="btn btn-outline" href="elan.html?id=${item.id}">Ətraflı bax</a>
-          <a class="btn btn-green" target="_blank" href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${item.brand} ${item.model} (${item.year}) elanıyla maraqlanıram.`)}">WhatsApp</a>
+
+        <div class="card-footer listing-card-footer">
+          <a class="btn btn-outline" href="elan.html?id=${item.id}">
+            <i class="fa-solid fa-eye"></i> Ətraflı bax
+          </a>
+
+          <a
+            class="btn btn-green whatsapp-card-btn"
+            target="_blank"
+            href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${item.brand} ${item.model} (${item.year}) elanıyla maraqlanıram.`)}"
+          >
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
         </div>
       </div>
     </article>
