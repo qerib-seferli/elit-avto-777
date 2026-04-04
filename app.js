@@ -67,6 +67,34 @@ async function getProfile(userId) {
   return data || null;
 }
 
+async function renderHomeHeaderAuth() {
+  const btn = qs('#homeAuthBtn');
+  if (!btn) return;
+
+  const user = await getSessionUser();
+
+  if (!user) {
+    btn.href = 'login.html';
+    btn.innerHTML = `<i class="fa-regular fa-user"></i><span>Giriş</span>`;
+    return;
+  }
+
+  const profile = await getProfile(user.id);
+  const displayName =
+    [profile?.name, profile?.surname].filter(Boolean).join(' ').trim() ||
+    user.user_metadata?.name ||
+    user.email?.split('@')[0] ||
+    'Profil';
+
+  if (profile?.role === 'admin') {
+    btn.href = 'admin.html';
+    btn.innerHTML = `<i class="fa-solid fa-shield-halved"></i><span>${displayName}</span>`;
+  } else {
+    btn.href = 'profile.html';
+    btn.innerHTML = `<i class="fa-regular fa-user"></i><span>${displayName}</span>`;
+  }
+}
+
 async function ensureProfile(user, extra = {}) {
   if (!user?.id) return null;
   const profile = await getProfile(user.id);
@@ -201,7 +229,6 @@ async function filterByBrand(brand) {
   renderListingGrid(filtered, await getFavoriteIds(), grid);
 }
 
-
 async function getFavoriteIds() {
   const user = await getSessionUser();
   if (!user) return JSON.parse(localStorage.getItem('guest_favorites') || '[]');
@@ -319,25 +346,35 @@ function renderTicker(listings = []) {
   });
 }
 
+
+
 async function initHome() {
   await renderHomeHeaderAuth();
-  
+
   const grid = qs('#listingGrid');
   const listings = await fetchListings();
   window.__allListings = listings;
+
   renderTicker(listings);
+
   const favoriteIds = await getFavoriteIds();
+
   if (qs('#statTotal')) qs('#statTotal').textContent = listings.length;
   if (qs('#statFav')) qs('#statFav').textContent = favoriteIds.length;
+
   const brands = [...new Set(listings.map(x => x.brand).filter(Boolean))].sort();
   const brandSelect = qs('#filterBrand');
-  if (brandSelect) brandSelect.innerHTML = '<option value="">Hamısı</option>' + brands.map(b => `<option>${b}</option>`).join('');
+  if (brandSelect) {
+    brandSelect.innerHTML = '<option value="">Hamısı</option>' + brands.map(b => `<option>${b}</option>`).join('');
+  }
+
   updateModels(listings);
   renderListingGrid(listings, favoriteIds, grid);
 
-  qs('#filterBrand')?.addEventListener('change', () => {
+  qs('#filterBrand')?.addEventListener('change', async () => {
     updateModels(listings);
     qsa('.brand-item').forEach(x => x.classList.toggle('active', x.dataset.brand === qs('#filterBrand').value));
+    qsa('.brand-chip').forEach(x => x.classList.toggle('active', x.dataset.brand === qs('#filterBrand').value));
   });
 
   qs('#applyFilters')?.addEventListener('click', async () => {
@@ -347,13 +384,15 @@ async function initHome() {
 
   qs('#resetFilters')?.addEventListener('click', async () => {
     qsa('.filter-wrap input').forEach(input => {
-      if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
+      if (input.type === 'checkbox') input.checked = false;
+      else if (input.type === 'radio') input.checked = input.value === '';
       else input.value = '';
     });
+
     qsa('.filter-wrap select').forEach(select => select.value = '');
-    const all = qs('input[name="condition"][value=""]');
-    if (all) all.checked = true;
     qsa('.brand-item').forEach(x => x.classList.remove('active'));
+    qsa('.brand-chip').forEach(x => x.classList.remove('active'));
+
     updateModels(listings);
     renderListingGrid(listings, await getFavoriteIds(), grid);
   });
@@ -364,6 +403,8 @@ async function initHome() {
 
   refreshMessageBadge();
 }
+
+
 
 async function initLogin() {
   const loginForm = qs('#loginForm');
@@ -464,6 +505,9 @@ async function initProfile() {
   refreshMessageBadge();
 }
 
+
+
+
 async function initDetail() {
   const id = params.get('id');
   const root = qs('#detailRoot');
@@ -488,14 +532,9 @@ async function initDetail() {
   root.innerHTML = `
     <section class="detail-card">
       <div class="gallery">
-        <div class="main-photo">
-          <img id="detailMainImage" src="${images[0]}" alt="${data.brand} ${data.model}">
-        </div>
-        <div class="thumbs">
-          ${images.map(src => `<button type="button"><img src="${src}" alt="thumb"></button>`).join('')}
-        </div>
+        <div class="main-photo"><img id="detailMainImage" src="${images[0]}" alt="${data.brand} ${data.model}"></div>
+        <div class="thumbs">${images.map(src => `<button type="button"><img src="${src}" alt="thumb"></button>`).join('')}</div>
       </div>
-
       <div class="sidebar-card">
         <h3>${data.brand} ${data.model}</h3>
         <p class="price" style="margin:10px 0 12px;">${fmt(data.price, data.currency)}</p>
@@ -516,24 +555,18 @@ async function initDetail() {
           <div class="spec"><small>Vəziyyət</small><strong>${data.condition || '-'}</strong></div>
         </div>
 
-        <div class="detail-text" style="margin-top:14px;">
-          ${data.description || 'Təsvir əlavə edilməyib.'}
-        </div>
+        <div class="detail-text" style="margin-top:14px;">${data.description || 'Təsvir əlavə edilməyib.'}</div>
 
         <div class="panel" style="padding:14px;margin-top:14px;">
           <strong>ELİT AVTO 777 qeydi</strong>
-          <p class="detail-text" style="margin-top:8px;">
-            ${data.salon_note || 'Salon qeydi əlavə edilməyib.'}
-          </p>
+          <p class="detail-text" style="margin-top:8px;">${data.salon_note || 'Salon qeydi əlavə edilməyib.'}</p>
         </div>
 
         <div class="filter-actions" style="padding-top:14px;">
           <button class="btn ${isFav ? 'btn-outline' : ''}" id="detailFavBtn" type="button">
             ${isFav ? 'Sevimlilərdən çıxart' : 'Sevimlilərə əlavə et'}
           </button>
-          <a class="btn btn-green" target="_blank" href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}">
-            WhatsApp
-          </a>
+          <a class="btn btn-green" target="_blank" href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}">WhatsApp</a>
         </div>
       </div>
     </section>
@@ -557,6 +590,7 @@ async function initDetail() {
 
   refreshMessageBadge();
 }
+
 
 
 async function initFavorites() {
