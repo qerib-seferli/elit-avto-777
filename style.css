@@ -2016,6 +2016,116 @@ select option { color: #111; }
 }
 
 
+.advanced-filter-grid-pro {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+
+.advanced-filter-grid-pro .full-span {
+  grid-column: 1 / -1;
+}
+
+.filter-equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+
+.filter-equipment-grid .equipment-chip {
+  min-height: 44px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.015);
+}
+
+.filter-equipment-grid .equipment-chip:has(input:checked) {
+  border-color: rgba(227,10,23,.5);
+  background: rgba(227,10,23,.10);
+  box-shadow:
+    0 0 12px rgba(227,10,23,.10),
+    inset 0 0 0 1px rgba(255,255,255,.02);
+}
+
+.advanced-filter-grid-pro .field,
+.advanced-filter-grid-pro .field-inline {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.05);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.equipment-filter-field {
+  padding: 14px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)) !important;
+}
+
+@media (max-width: 980px) {
+  .advanced-filter-grid-pro {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .filter-equipment-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .advanced-filter-grid-pro {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 8px;
+  }
+
+  .advanced-filter-grid-pro .field,
+  .advanced-filter-grid-pro .field-inline {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .advanced-filter-grid-pro label {
+    font-size: 11px;
+  }
+
+  .advanced-filter-grid-pro input,
+  .advanced-filter-grid-pro select {
+    min-height: 40px;
+    padding: 10px 10px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+
+  .filter-equipment-grid {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 8px;
+  }
+
+  .filter-equipment-grid .equipment-chip {
+    min-height: 42px;
+    padding: 8px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .circle-switches {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 8px;
+  }
+
+  .circle-switches .chip {
+    width: 100%;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 11px;
+    min-height: 40px;
+  }
+}
+
+
+
+
 
 
 
