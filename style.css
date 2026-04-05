@@ -2072,11 +2072,18 @@ select option { color: #111; }
   }
 }
 
+/* Telefonda 2 sütun olsun */
 @media (max-width: 768px) {
-  .advanced-filter-grid-pro {
-    grid-template-columns: repeat(2, minmax(0,1fr));          /* Telefonda 2 sütun olsun */
-    gap: 8px;
+  .field-inline {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 6px;
   }
+
+  .field-inline > div {
+    min-width: 0;
+    width: 100%;
+  }
+}
 
   .advanced-filter-grid-pro .field,
   .advanced-filter-grid-pro .field-inline {
