@@ -109,88 +109,269 @@
       
 
       <section class="panel filter-wrap sticky-filter-panel">
-        <div class="filter-header always-visible-filter">
-          <h3><i class="fa-solid fa-magnifying-glass"></i> Axtarış</h3>
-          <button class="btn btn-outline btn-small" id="toggleAdvancedFilters" type="button">Ətraflı axtar</button>
-        </div>
+  <div class="filter-header always-visible-filter">
+    <h3><i class="fa-solid fa-magnifying-glass"></i> Axtarış</h3>
+    <button class="btn btn-outline btn-small" id="toggleAdvancedFilters" type="button">Ətraflı axtar</button>
+  </div>
 
-        <div class="quick-filter-row">
-          <div class="field grow-field">
-            <label>Marka</label>
-            <select id="filterBrand"><option value="">Hamısı</option></select>
-          </div>
-          <div class="field grow-field">
-            <label>Model</label>
-            <select id="filterModel"><option value="">Hamısı</option></select>
-          </div>
-          <button class="btn search-btn-mobile" id="applyFilters" type="button"><i class="fa-solid fa-filter"></i> Axtar</button>
-        </div>
+  <div class="quick-filter-row">
+    <div class="field grow-field">
+      <label>Marka</label>
+      <select id="filterBrand"><option value="">Hamısı</option></select>
+    </div>
+    <div class="field grow-field">
+      <label>Model</label>
+      <select id="filterModel"><option value="">Hamısı</option></select>
+    </div>
+    <button class="btn search-btn-mobile" id="applyFilters" type="button">
+      <i class="fa-solid fa-filter"></i> Axtar
+    </button>
+  </div>
 
-        <div class="advanced-filters collapsed" id="advancedFilters">
-          <div class="filter-grid mobile-priority-grid">
-            <div class="field field-inline tight-inline">
-              <div>
-                <label>Qiymət min</label>
-                <input id="filterPriceMin" type="number" placeholder="5000">
-              </div>
-              <div>
-                <label>Qiymət max</label>
-                <input id="filterPriceMax" type="number" placeholder="120000">
-              </div>
-            </div>
-            <div class="field">
-              <label>Valyuta</label>
-              <select id="filterCurrency">
-                <option value="">Hamısı</option>
-                <option value="AZN">AZN</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Vəziyyət</label>
-              <div class="switches circle-switches">
-                <label class="chip radio-chip"><input type="radio" name="condition" value="" checked><span class="dot-radio"></span>Hamısı</label>
-                <label class="chip radio-chip"><input type="radio" name="condition" value="Yeni"><span class="dot-radio"></span>Yeni</label>
-                <label class="chip radio-chip"><input type="radio" name="condition" value="Sürülmüş"><span class="dot-radio"></span>Sürülmüş</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Əlavələr</label>
-              <div class="switches circle-switches">
-                <label class="chip check-chip"><input type="checkbox" id="filterCredit"><span class="dot-radio"></span>Kredit</label>
-                <label class="chip check-chip"><input type="checkbox" id="filterBarter"><span class="dot-radio"></span>Barter</label>
-              </div>
-            </div>
-            <div class="field">
-              <label>Yanacaq</label>
-              <select id="filterFuel">
-                <option value="">Hamısı</option>
-                <option>Benzin</option>
-                <option>Dizel</option>
-                <option>Qaz</option>
-                <option>Hibrid</option>
-                <option>Elektrik</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Rəng</label>
-              <select id="filterColor">
-                <option value="">Hamısı</option>
-                <option value="Qara">⚫ Qara</option>
-                <option value="Ağ">⚪ Ağ</option>
-                <option value="Qırmızı">🔴 Qırmızı</option>
-                <option value="Gümüşü">⚪ Gümüşü</option>
-                <option value="Boz">⚫ Boz</option>
-                <option value="Mavi">🔵 Mavi</option>
-              </select>
-            </div>
-          </div>
-          <div class="filter-actions compact-actions">
-            <button class="btn btn-outline" id="resetFilters" type="button">Sıfırla</button>
-          </div>
+  <div class="advanced-filters collapsed" id="advancedFilters">
+    <div class="filter-grid advanced-filter-grid-pro">
+
+      <div class="field field-inline tight-inline">
+        <div>
+          <label>Qiymət min</label>
+          <input id="filterPriceMin" type="number" placeholder="5000">
         </div>
-      </section>
+        <div>
+          <label>Qiymət max</label>
+          <input id="filterPriceMax" type="number" placeholder="120000">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Valyuta</label>
+        <select id="filterCurrency">
+          <option value="">Hamısı</option>
+          <option value="AZN">AZN</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+        </select>
+      </div>
+
+      <div class="field field-inline tight-inline">
+        <div>
+          <label>İl min</label>
+          <input id="filterYearMin" type="number" placeholder="2010">
+        </div>
+        <div>
+          <label>İl max</label>
+          <input id="filterYearMax" type="number" placeholder="2025">
+        </div>
+      </div>
+
+      <div class="field field-inline tight-inline">
+        <div>
+          <label>Yürüş min</label>
+          <input id="filterMileageMin" type="number" placeholder="0">
+        </div>
+        <div>
+          <label>Yürüş max</label>
+          <input id="filterMileageMax" type="number" placeholder="200000">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Mühərrik</label>
+        <input id="filterEngine" type="text" placeholder="Məs: 2.0 Turbo">
+      </div>
+
+      <div class="field">
+        <label>Yanacaq</label>
+        <select id="filterFuel">
+          <option value="">Hamısı</option>
+          <option>Benzin</option>
+          <option>Dizel</option>
+          <option>Qaz</option>
+          <option>Elektro</option>
+          <option>Hibrid</option>
+          <option>Plug-in Hibrid</option>
+          <option>Hidrogen</option>
+          <option>Dizel-Hibrid</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Ötürücü</label>
+        <select id="filterDrivetrain">
+          <option value="">Hamısı</option>
+          <option>Arxa</option>
+          <option>Ön</option>
+          <option>Tam</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Sürətlər qutusu</label>
+        <select id="filterTransmission">
+          <option value="">Hamısı</option>
+          <option>Avtomat (DHT)</option>
+          <option>Avtomat (AT)</option>
+          <option>Avtomat (Robot)</option>
+          <option>Avtomat (Reduktor)</option>
+          <option>Mexaniki (MT)</option>
+          <option>Avtomat (Variator)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Rəng</label>
+        <select id="filterColor">
+          <option value="">Hamısı</option>
+          <option value="Qara">⚫ Qara</option>
+          <option value="Yaş Asfalt">⚫ Yaş Asfalt</option>
+          <option value="Boz">⚫ Boz</option>
+          <option value="Gümüşü">⚪ Gümüşü</option>
+          <option value="Ağ">⚪ Ağ</option>
+          <option value="Bej">🟤 Bej</option>
+          <option value="Tünd qırmızı">🔴 Tünd qırmızı</option>
+          <option value="Qırmızı">🔴 Qırmızı</option>
+          <option value="Çəhrayı">🩷 Çəhrayı</option>
+          <option value="Narıncı">🟠 Narıncı</option>
+          <option value="Qızılı">🟡 Qızılı</option>
+          <option value="Sarı">🟡 Sarı</option>
+          <option value="Xaki">🟢 Xaki</option>
+          <option value="Tünd yaşıl">🟢 Tünd yaşıl</option>
+          <option value="Yaşıl">🟢 Yaşıl</option>
+          <option value="Açıq yaşıl">🟢 Açıq yaşıl</option>
+          <option value="Mavi">🔵 Mavi</option>
+          <option value="Göy">🔵 Göy</option>
+          <option value="Bənövşəyi">🟣 Bənövşəyi</option>
+          <option value="Qəhvəyi">🟤 Qəhvəyi</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Ban növü</label>
+        <select id="filterBodyType">
+          <option value="">Hamısı</option>
+          <option>Avtobus</option>
+          <option>Avtokran</option>
+          <option>Dartqı</option>
+          <option>Fastbek</option>
+          <option>Fayton</option>
+          <option>Furqon</option>
+          <option>Hetçbek (3 qapı)</option>
+          <option>Hetçbek (4 qapı)</option>
+          <option>Hetçbek (5 qapı)</option>
+          <option>Kabriolet</option>
+          <option>Karvan</option>
+          <option>Kompakt-Van</option>
+          <option>Kupe</option>
+          <option>Kvadrosikl</option>
+          <option>Liftbek</option>
+          <option>Limuzin</option>
+          <option>Mikroavtobus</option>
+          <option>Mikrovan</option>
+          <option>Minivan</option>
+          <option>Moped</option>
+          <option>Motosiklet</option>
+          <option>Offroader / SUV (3 qapı)</option>
+          <option>Offroader / SUV (5 qapı)</option>
+          <option>Offroader / SUV (açıq)</option>
+          <option>Pikap (bir yarım kabin)</option>
+          <option>Pikap (ikiqat kabin)</option>
+          <option>Pikap (tək kabin)</option>
+          <option>Qolfkar</option>
+          <option>Rodster</option>
+          <option>Sedan</option>
+          <option>Skuter</option>
+          <option>Spidster</option>
+          <option>SUV Kupe</option>
+          <option>Tarqa</option>
+          <option>Trisikl</option>
+          <option>Universal (3 qapı)</option>
+          <option>Universal (5 qapı)</option>
+          <option>Van</option>
+          <option>Yük maşını</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Vəziyyət</label>
+        <div class="switches circle-switches">
+          <label class="chip radio-chip"><input type="radio" name="condition" value="" checked><span class="dot-radio"></span>Hamısı</label>
+          <label class="chip radio-chip"><input type="radio" name="condition" value="Yeni"><span class="dot-radio"></span>Yeni</label>
+          <label class="chip radio-chip"><input type="radio" name="condition" value="Sürülmüş"><span class="dot-radio"></span>Sürülmüş</label>
+        </div>
+      </div>
+
+      <div class="field field-inline tight-inline">
+        <div>
+          <label>Oturacaq sayı min</label>
+          <input id="filterSeatsMin" type="number" placeholder="2">
+        </div>
+        <div>
+          <label>Oturacaq sayı max</label>
+          <input id="filterSeatsMax" type="number" placeholder="8">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Əlavələr</label>
+        <div class="switches circle-switches">
+          <label class="chip check-chip"><input type="checkbox" id="filterCredit"><span class="dot-radio"></span>Kredit</label>
+          <label class="chip check-chip"><input type="checkbox" id="filterBarter"><span class="dot-radio"></span>Barter</label>
+          <label class="chip check-chip"><input type="checkbox" id="filterVip"><span class="dot-radio"></span>VIP</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Vəziyyət detalları</label>
+        <div class="switches circle-switches">
+          <label class="chip check-chip"><input type="checkbox" id="filterDamage"><span class="dot-radio"></span>Vuruğu var</label>
+          <label class="chip check-chip"><input type="checkbox" id="filterPainted"><span class="dot-radio"></span>Rənglənib</label>
+        </div>
+      </div>
+
+      <div class="field equipment-filter-field full-span">
+        <label>Avtomobilin təchizatı</label>
+        <div class="equipment-grid filter-equipment-grid" id="filterEquipmentGrid">
+          <label class="equipment-chip"><input type="checkbox" value="Yüngül lehimli disklər"><span class="dot-radio"></span><span>Yüngül lehimli disklər</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="ABS"><span class="dot-radio"></span><span>ABS</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Lyuk"><span class="dot-radio"></span><span>Lyuk</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Yağış sensoru"><span class="dot-radio"></span><span>Yağış sensoru</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Mərkəzi qapanma"><span class="dot-radio"></span><span>Mərkəzi qapanma</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Park radarı"><span class="dot-radio"></span><span>Park radarı</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Kondisioner"><span class="dot-radio"></span><span>Kondisioner</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Oturacaqların isidilməsi"><span class="dot-radio"></span><span>Oturacaqların isidilməsi</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Dəri salon"><span class="dot-radio"></span><span>Dəri salon</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Ksenon lampalar"><span class="dot-radio"></span><span>Ksenon lampalar</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="360º kamera"><span class="dot-radio"></span><span>360º kamera</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Arxa görüntü kamerası"><span class="dot-radio"></span><span>Arxa görüntü kamerası</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Yan pərdələr"><span class="dot-radio"></span><span>Yan pərdələr</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Oturacaqların ventilyasiyası"><span class="dot-radio"></span><span>Oturacaqların ventilyasiyası</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Hava yastıqları"><span class="dot-radio"></span><span>Hava yastıqları</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Kruiz-kontrol"><span class="dot-radio"></span><span>Kruiz-kontrol</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Klimat-kontrol"><span class="dot-radio"></span><span>Klimat-kontrol</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Naviqasiya sistemi"><span class="dot-radio"></span><span>Naviqasiya sistemi</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Monitor (Multimediya)"><span class="dot-radio"></span><span>Monitor (Multimediya)</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Multi-sükan"><span class="dot-radio"></span><span>Multi-sükan</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="İşıq sensoru"><span class="dot-radio"></span><span>İşıq sensoru</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Ölü zona köməkçisi"><span class="dot-radio"></span><span>Ölü zona köməkçisi</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Zolaqda qalma yardımı"><span class="dot-radio"></span><span>Zolaqda qalma yardımı</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Simsiz şarj"><span class="dot-radio"></span><span>Simsiz şarj</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Apple CarPlay / Android Auto"><span class="dot-radio"></span><span>Apple CarPlay / Android Auto</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Start-stop sistemi"><span class="dot-radio"></span><span>Start-stop sistemi</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Açarsız giriş"><span class="dot-radio"></span><span>Açarsız giriş</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Baqajın avtomatik açılması"><span class="dot-radio"></span><span>Baqajın avtomatik açılması</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Güzgülərin qatlanması"><span class="dot-radio"></span><span>Güzgülərin qatlanması</span></label>
+          <label class="equipment-chip"><input type="checkbox" value="Yoxuşda dəstək sistemi"><span class="dot-radio"></span><span>Yoxuşda dəstək sistemi</span></label>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-actions compact-actions">
+      <button class="btn btn-outline" id="resetFilters" type="button">Sıfırla</button>
+    </div>
+  </div>
+</section>
+
+      
 
       <section>
         <div class="section-head">
