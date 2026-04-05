@@ -2137,7 +2137,7 @@ select option { color: #111; }
 
   .circle-switches {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));   /* Kredit/Barter/VIP və s. telefonda 2 sütun */
+    grid-template-columns: repeat(3, minmax(0,1fr));   /* Kredit/Barter/VIP və s. telefonda 3 sütun */
     gap: 8px;
   }
 
