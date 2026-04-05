@@ -351,11 +351,13 @@ function renderThreadList(items, selectedUserId) {
     <button class="chat-thread-item ${item.user_id === selectedUserId ? 'active' : ''} ${item.unread_count ? 'unread' : ''}" type="button" data-chat-user="${item.user_id}">
       <div class="chat-list-avatar">
         <img src="${avatarUrl(item.profile)}" alt="${escapeHtml(fullName(item.profile))}">
-        ${avatarStatusDot(item.profile)}
       </div>
 
       <div class="chat-thread-text">
-        <strong>${escapeHtml(fullName(item.profile))}</strong>
+        <strong class="name-with-status">
+          <span class="inline-status-dot ${isUserOnline(item.profile) ? 'online' : 'offline'}"></span>
+          <span>${escapeHtml(fullName(item.profile))}</span>
+        </strong>
         <p>${escapeHtml(item.last_message || 'Mesaj yoxdur')}</p>
       </div>
 
@@ -392,11 +394,13 @@ function renderMessageRows(messages, usersMap, currentUserId, canManageAny = fal
           <div class="message-top">
             <div class="message-avatar">
               <img src="${avatarUrl(senderProfile)}" alt="${escapeHtml(fullName(senderProfile))}">
-              ${avatarStatusDot(senderProfile)}
             </div>
             <div>
               <div class="message-name">${escapeHtml(fullName(senderProfile))}</div>
-              <span class="message-role">${roleText}</span>
+              <span class="message-role message-role-line">
+                <span class="inline-status-dot ${isUserOnline(senderProfile) ? 'online' : 'offline'}"></span>
+                <span>${roleText}</span>
+              </span>
             </div>
           </div>
 
