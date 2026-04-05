@@ -1819,21 +1819,90 @@ async function initAdmin() {
       })
       .subscribe();
   }
-  
-    await Promise.all([loadStats(), loadListings(), loadUsers()]);
-            setupPresenceTracking();
-          await setupGlobalMessageNotifications();
-  await loadMessages();
-}
 
+  
+  
+      populateAdminListingFormOptions();
+
+  qs('#clearListingForm')?.addEventListener('click', () => {
+    clearAdminListingForm();
+    qs('#adminMsg').textContent = 'Forma təmizləndi.';
+  });
+
+  qs('#listingForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const id = qs('#listingId').value.trim();
+    const imageFiles = [...(qs('#carImages')?.files || [])];
+    let existingImages = [];
+
+    if (id) {
+      const { data: currentItem } = await supabaseClient
+        .from('elanlar')
+        .select('images')
+        .eq('id', id)
+        .maybeSingle();
+
+      existingImages = Array.isArray(currentItem?.images) ? currentItem.images : [];
+    }
+
+    const uploadedUrls = [];
+    for (const file of imageFiles) {
+      const path = `listing-${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
+      const { error: uploadErr } = await supabaseClient.storage.from('elan-images').upload(path, file, { upsert: true });
+      if (!uploadErr) {
+        const { data: publicUrlData } = supabaseClient.storage.from('elan-images').getPublicUrl(path);
+        if (publicUrlData?.publicUrl) uploadedUrls.push(publicUrlData.publicUrl);
+      }
+    }
+
+    const payload = collectAdminListingPayload(uploadedUrls.length ? [...existingImages, ...uploadedUrls] : existingImages);
+
+    let error = null;
+
+    if (id) {
+      const res = await supabaseClient.from('elanlar').update(payload).eq('id', id);
+      error = res.error;
+    } else {
+      const res = await supabaseClient.from('elanlar').insert(payload);
+      error = res.error;
+    }
+
+    qs('#adminMsg').textContent = error
+      ? `Xəta: ${error.message}`
+      : (id ? 'Elan uğurla redaktə olundu.' : 'Yeni elan uğurla əlavə olundu.');
+
+    if (!error) {
+      clearAdminListingForm();
+      await loadListings();
+      await loadStats();
+    }
+  });
+
+  
+          await Promise.all([loadStats(), loadListings(), loadUsers()]);
+              setupPresenceTracking();
+          await setupGlobalMessageNotifications();
+          await loadMessages();
+
+  
+        qs('#adminMessageKpi')?.addEventListener('click', () => {
+          const chatSection = qs('.admin-chat-workspace');
+            if (chatSection) {
+            chatSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+  
+  }
+
+        
 
 
 
 
 
 async function init() {
-  markActiveNav();
-  async function renderHomeHeaderAuth() {
+  
   const btn = qs('#homeAuthBtn');
   if (!btn) return;
 
