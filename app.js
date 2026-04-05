@@ -1902,7 +1902,8 @@ async function initAdmin() {
 
 
 async function init() {
-  
+  markActiveNav();
+  async function renderHomeHeaderAuth() {
   const btn = qs('#homeAuthBtn');
   if (!btn) return;
 
