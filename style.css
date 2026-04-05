@@ -1633,6 +1633,142 @@ select option { color: #111; }
 
 
 
+.kpi-button {
+  width: 100%;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.kpi-message-jump {
+  position: relative;
+}
+
+.kpi-message-jump.has-new {
+  border-color: rgba(227,10,23,.45);
+  box-shadow: 0 0 16px rgba(227,10,23,.16);
+}
+
+.admin-listing-form-pro .field select,
+.admin-listing-form-pro .field input,
+.admin-listing-form-pro .field textarea {
+  width: 100%;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 10px;
+}
+
+.equipment-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+  cursor: pointer;
+}
+
+.equipment-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  min-height: auto;
+}
+
+.equipment-chip .dot-radio {
+  width: 15px;
+  height: 15px;
+}
+
+.equipment-chip:has(input:checked) {
+  border-color: rgba(255,193,7,.55);
+  background: rgba(255,193,7,.10);
+  box-shadow: 0 0 12px rgba(255,193,7,.12);
+}
+
+.admin-listings-scroll {
+  max-height: 520px;
+  overflow: auto;
+  border-radius: 16px;
+}
+
+.admin-listings-table {
+  min-width: 760px;
+}
+
+.vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff4b1;
+  border: 1px solid rgba(255,193,7,.50);
+  background: linear-gradient(135deg, rgba(255,193,7,.20), rgba(227,10,23,.12));
+  box-shadow:
+    0 0 10px rgba(255,193,7,.18),
+    0 0 18px rgba(255,193,7,.10);
+  animation: vipPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes vipPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(255,193,7,.18),
+      0 0 18px rgba(255,193,7,.10);
+  }
+  50% {
+    box-shadow:
+      0 0 14px rgba(255,193,7,.32),
+      0 0 28px rgba(255,193,7,.18);
+  }
+}
+
+.admin-action-stack {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.04);
+}
+
+@media (max-width: 768px) {
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-listings-scroll {
+    max-height: 420px;
+  }
+
+  .listings-table-card {
+    padding: 12px;
+  }
+}
+
+
+
 
 
 
