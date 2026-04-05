@@ -1230,7 +1230,7 @@ async function initDetail() {
           <h3 class="detail-section-title">Əsas məlumatlar</h3>
 
           <div class="detail-spec-grid-pro">
-            <div class="spec"><small>Marka</small><strong>${data.brand || '-'}</strong></div>
+            ${false ? `<div class="spec"><small>Marka</small><strong>${data.brand || '-'}</strong></div>` : ''}
             <div class="spec"><small>Model</small><strong>${data.model || '-'}</strong></div>
             <div class="spec"><small>Qiymət</small><strong>${fmt(data.price, data.currency)}</strong></div>
             <div class="spec"><small>Valyuta</small><strong>${data.currency || '-'}</strong></div>
