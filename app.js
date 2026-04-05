@@ -1230,10 +1230,10 @@ async function initDetail() {
           <h3 class="detail-section-title">Əsas məlumatlar</h3>
 
           <div class="detail-spec-grid-pro">
-            ${false ? `<div class="spec"><small>Marka</small><strong>${data.brand || '-'}</strong></div>` : ''}                    // SƏHİFƏDƏ GÖRSƏNMƏYİNİ İSTƏSƏN ${false ? `...... ` : ''} Bunları silsadəcə div sətri qalsın
-            ${false ? `<div class="spec"><small>Model</small><strong>${data.model || '-'}</strong></div>` : ''}                    // SƏHİFƏDƏ GÖRSƏNMƏYİNİ İSTƏSƏN ${false ? `...... ` : ''} Bunları silsadəcə div sətri qalsın
-            ${false ? `<div class="spec"><small>Qiymət</small><strong>${fmt(data.price, data.currency)}</strong></div>` : ''}      // SƏHİFƏDƏ GÖRSƏNMƏYİNİ İSTƏSƏN ${false ? `...... ` : ''} Bunları silsadəcə div sətri qalsın
-            ${false ? `<div class="spec"><small>Valyuta</small><strong>${data.currency || '-'}</strong></div>` : ''}               // SƏHİFƏDƏ GÖRSƏNMƏYİNİ İSTƏSƏN ${false ? `...... ` : ''} Bunları silsadəcə div sətri qalsın
+            ${false /* Müvəqqəti gizlədildi */? `<div class="spec"><small>Marka</small><strong>${data.brand || '-'}</strong></div>` : ''}
+            ${false /* Müvəqqəti gizlədildi */? `<div class="spec"><small>Model</small><strong>${data.model || '-'}</strong></div>` : ''}
+            ${false /* Müvəqqəti gizlədildi */? `<div class="spec"><small>Qiymət</small><strong>${fmt(data.price, data.currency)}</strong></div>` : ''}
+            ${false /* Müvəqqəti gizlədildi */? `<div class="spec"><small>Valyuta</small><strong>${data.currency || '-'}</strong></div>` : ''}
             <div class="spec"><small>İl</small><strong>${data.year || '-'}</strong></div>
             <div class="spec"><small>Yürüş (km)</small><strong>${Number(data.mileage || 0).toLocaleString('az-AZ')} km</strong></div>
             <div class="spec"><small>Mühərrik</small><strong>${data.engine || '-'}</strong></div>
