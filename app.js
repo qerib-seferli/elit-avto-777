@@ -1130,6 +1130,7 @@ async function initResetPassword() {
 
 
 
+
 async function initDetail() {
   const id = params.get('id');
   const root = qs('#detailRoot');
@@ -1140,63 +1141,157 @@ async function initDetail() {
     return;
   }
 
-  const { data } = await supabaseClient.from('elanlar').select('*').eq('id', id).maybeSingle();
+  const { data } = await supabaseClient
+    .from('elanlar')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
 
   if (!data) {
     root.innerHTML = '<div class="empty-state">Elan tapılmadı.</div>';
     return;
   }
 
-  const images = Array.isArray(data.images) && data.images.length ? data.images : ['foto/car-placeholder.jpg'];
+  const images = Array.isArray(data.images) && data.images.length
+    ? data.images
+    : ['foto/car-placeholder.jpg'];
+
   const favoriteIds = await getFavoriteIds();
   const isFav = favoriteIds.includes(data.id);
 
+  const equipment = Array.isArray(data.equipment) ? data.equipment : [];
+  const colorHex = data.color_hex || getColorHexByName(data.color || '') || '#ffffff';
+
   root.innerHTML = `
-    <section class="detail-card">
-      <div class="gallery">
-        <div class="main-photo"><img id="detailMainImage" src="${images[0]}" alt="${data.brand} ${data.model}"></div>
-        <div class="thumbs">${images.map(src => `<button type="button"><img src="${src}" alt="thumb"></button>`).join('')}</div>
-      </div>
-      <div class="sidebar-card">
-        <h3>${data.brand} ${data.model}</h3>
-        <p class="price" style="margin:10px 0 12px;">${fmt(data.price, data.currency)}</p>
+    <section class="detail-pro-layout">
+      <div class="detail-pro-gallery panel">
+        <div class="detail-gallery-main-wrap">
+          ${data.is_vip ? `
+            <span class="vip-badge detail-vip-badge">
+              <i class="fa-solid fa-crown"></i> VIP
+            </span>
+          ` : ''}
 
-        <div class="icon-row">
-          ${data.is_credit ? '<span class="badge"><i class="fa-solid fa-wallet"></i> Kredit var</span>' : ''}
-          ${data.is_barter ? '<span class="badge"><i class="fa-solid fa-arrow-right-arrow-left"></i> Barter var</span>' : ''}
-        </div>
-
-        <div class="detail-meta" style="margin-top:14px;">
-          <div class="spec"><small>İl</small><strong>${data.year || '-'}</strong></div>
-          <div class="spec"><small>Yürüş</small><strong>${Number(data.mileage || 0).toLocaleString('az-AZ')} km</strong></div>
-          <div class="spec"><small>Mühərrik</small><strong>${data.engine || '-'}</strong></div>
-          <div class="spec"><small>Yanacaq</small><strong>${data.fuel_type || '-'}</strong></div>
-          <div class="spec"><small>Qutu</small><strong>${data.transmission || '-'}</strong></div>
-          <div class="spec"><small>Rəng</small><strong>${data.color || '-'}</strong></div>
-          <div class="spec"><small>Ban növü</small><strong>${data.body_type || '-'}</strong></div>
-          <div class="spec"><small>Vəziyyət</small><strong>${data.condition || '-'}</strong></div>
-        </div>
-
-        <div class="detail-text" style="margin-top:14px;">${data.description || 'Təsvir əlavə edilməyib.'}</div>
-
-        <div class="panel" style="padding:14px;margin-top:14px;">
-          <strong>ELİT AVTO 777 qeydi</strong>
-          <p class="detail-text" style="margin-top:8px;">${data.salon_note || 'Salon qeydi əlavə edilməyib.'}</p>
-        </div>
-
-        <div class="filter-actions" style="padding-top:14px;">
-          <button class="btn ${isFav ? 'btn-outline' : ''}" id="detailFavBtn" type="button">
-            ${isFav ? 'Sevimlilərdən çıxart' : 'Sevimlilərə əlavə et'}
+          <button class="detail-floating-fav ${isFav ? 'active' : ''}" id="detailFavBtn" type="button" aria-label="Sevimli">
+            <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
           </button>
-          <a class="btn btn-green" target="_blank" href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}">WhatsApp</a>
+
+          <div class="main-photo detail-main-photo-pro">
+            <img id="detailMainImage" src="${images[0]}" alt="${escapeHtml(data.brand || '')} ${escapeHtml(data.model || '')}">
+          </div>
+        </div>
+
+        <div class="thumbs detail-thumbs-pro">
+          ${images.map((src, i) => `
+            <button type="button" class="${i === 0 ? 'active' : ''}">
+              <img src="${src}" alt="thumb">
+            </button>
+          `).join('')}
         </div>
       </div>
+
+      <div class="detail-pro-sidebar">
+        <section class="sidebar-card detail-title-card">
+          <div class="detail-title-top">
+            <div>
+              <h2>${escapeHtml(data.brand || '')} ${escapeHtml(data.model || '')}</h2>
+              <p class="detail-price-pro">${fmt(data.price, data.currency)}</p>
+            </div>
+
+            <a
+              class="btn btn-green detail-whatsapp-btn"
+              target="_blank"
+              href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}"
+            >
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+
+          <div class="detail-badges-pro">
+            <span class="listing-flag condition-flag">
+              <i class="fa-solid fa-car-side"></i> ${data.condition || '-'}
+            </span>
+
+            ${data.is_credit ? `
+              <span class="listing-flag credit-flag">
+                <i class="fa-solid fa-wallet"></i> Kredit
+              </span>
+            ` : ''}
+
+            ${data.is_barter ? `
+              <span class="listing-flag barter-flag">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i> Barter
+              </span>
+            ` : ''}
+          </div>
+        </section>
+
+        <section class="sidebar-card">
+          <h3 class="detail-section-title">Əsas məlumatlar</h3>
+
+          <div class="detail-spec-grid-pro">
+            <div class="spec"><small>Marka</small><strong>${data.brand || '-'}</strong></div>
+            <div class="spec"><small>Model</small><strong>${data.model || '-'}</strong></div>
+            <div class="spec"><small>Qiymət</small><strong>${fmt(data.price, data.currency)}</strong></div>
+            <div class="spec"><small>Valyuta</small><strong>${data.currency || '-'}</strong></div>
+            <div class="spec"><small>İl</small><strong>${data.year || '-'}</strong></div>
+            <div class="spec"><small>Yürüş (km)</small><strong>${Number(data.mileage || 0).toLocaleString('az-AZ')} km</strong></div>
+            <div class="spec"><small>Mühərrik</small><strong>${data.engine || '-'}</strong></div>
+            <div class="spec"><small>Yanacaq</small><strong>${data.fuel_type || '-'}</strong></div>
+            <div class="spec"><small>Ötürücü</small><strong>${data.drivetrain || '-'}</strong></div>
+            <div class="spec"><small>Sürətlər qutusu</small><strong>${data.transmission || '-'}</strong></div>
+
+            <div class="spec">
+              <small>Rəng</small>
+              <strong class="color-preview">
+                <span class="color-dot" style="background:${colorHex}"></span>
+                <span>${data.color || '-'}</span>
+              </strong>
+            </div>
+
+            <div class="spec"><small>Ban növü</small><strong>${data.body_type || '-'}</strong></div>
+            <div class="spec"><small>Vəziyyət</small><strong>${data.condition || '-'}</strong></div>
+            <div class="spec"><small>Oturacaq sayı</small><strong>${data.seats_count || '-'}</strong></div>
+            <div class="spec"><small>Vuruğu</small><strong>${data.has_damage ? 'Var' : 'Yoxdur'}</strong></div>
+            <div class="spec"><small>Rənglənib</small><strong>${data.is_painted ? 'Rənglənib' : 'Rənglənməyib'}</strong></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="detail-bottom-stack">
+      <section class="sidebar-card">
+        <h3 class="detail-section-title">Avtomobilin təchizatı</h3>
+        ${
+          equipment.length
+            ? `<div class="detail-equipment-grid">
+                ${equipment.map(item => `
+                  <span class="detail-equipment-chip">
+                    <i class="fa-solid fa-check"></i> ${escapeHtml(item)}
+                  </span>
+                `).join('')}
+              </div>`
+            : `<div class="empty-state">Təchizat məlumatı əlavə edilməyib.</div>`
+        }
+      </section>
+
+      <section class="sidebar-card">
+        <h3 class="detail-section-title">ELİT AVTO 777 qeydi</h3>
+        <p class="detail-text">${data.salon_note || 'Salon qeydi əlavə edilməyib.'}</p>
+      </section>
+
+      <section class="sidebar-card">
+        <h3 class="detail-section-title">Təsvir</h3>
+        <p class="detail-text">${data.description || 'Təsvir əlavə edilməyib.'}</p>
+      </section>
     </section>
   `;
 
-  qsa('.thumbs button').forEach((btn, i) => {
+  qsa('.detail-thumbs-pro button').forEach((btn, i) => {
     btn.addEventListener('click', () => {
       qs('#detailMainImage').src = images[i];
+      qsa('.detail-thumbs-pro button').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
     });
   });
 
@@ -1204,14 +1299,19 @@ async function initDetail() {
     await toggleFavorite(data.id);
     const currentFavs = await getFavoriteIds();
     const nowFav = currentFavs.includes(data.id);
-
     const favBtn = qs('#detailFavBtn');
-    favBtn.textContent = nowFav ? 'Sevimlilərdən çıxart' : 'Sevimlilərə əlavə et';
-    favBtn.classList.toggle('btn-outline', nowFav);
+
+    favBtn.classList.toggle('active', nowFav);
+    favBtn.innerHTML = `<i class="fa-${nowFav ? 'solid' : 'regular'} fa-heart"></i>`;
   });
 
   refreshMessageBadge();
 }
+
+
+
+
+
 
 
 
