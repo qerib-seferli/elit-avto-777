@@ -2091,7 +2091,7 @@ select option { color: #111; }
 /* Telefon görünüşü */
 @media (max-width: 768px) {
   .advanced-filter-grid-pro {
-    grid-template-columns: repeat(2, minmax(0,1fr));   /* Telefonda 2 sütun */
+    grid-template-columns: repeat(3, minmax(0,1fr));   /* Telefonda 3 sütun */
     gap: 8px;
   }
 
