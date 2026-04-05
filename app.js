@@ -1193,19 +1193,25 @@ async function initDetail() {
       <div class="detail-pro-sidebar">
         <section class="sidebar-card detail-title-card">
           <div class="detail-title-top">
-            <div>
-              <h2>${escapeHtml(data.brand || '')} ${escapeHtml(data.model || '')}</h2>
-              <p class="detail-price-pro">${fmt(data.price, data.currency)}</p>
-            </div>
+  <div>
+    <h2>${escapeHtml(data.brand || '')} ${escapeHtml(data.model || '')}</h2>
+    <p class="detail-price-pro">${fmt(data.price, data.currency)}</p>
+  </div>
 
-            <a
-              class="btn btn-green detail-whatsapp-btn"
-              target="_blank"
-              href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}"
-            >
-              <i class="fa-brands fa-whatsapp"></i> WhatsApp
-            </a>
-          </div>
+  <div class="detail-top-actions">
+    <button class="btn btn-outline detail-interest-btn" id="detailInterestBtn" type="button">
+      <i class="fa-regular fa-paper-plane"></i> Maraqlanıram
+    </button>
+
+    <a
+      class="btn btn-green detail-whatsapp-btn"
+      target="_blank"
+      href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${data.brand} ${data.model} elanına baxdım, ətraflı məlumat istəyirəm.`)}"
+    >
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </a>
+  </div>
+</div>
 
           <div class="detail-badges-pro">
             <span class="listing-flag condition-flag">
@@ -1296,16 +1302,44 @@ async function initDetail() {
   });
 
   qs('#detailFavBtn')?.addEventListener('click', async () => {
-    await toggleFavorite(data.id);
-    const currentFavs = await getFavoriteIds();
-    const nowFav = currentFavs.includes(data.id);
-    const favBtn = qs('#detailFavBtn');
+  await toggleFavorite(data.id);
+  const currentFavs = await getFavoriteIds();
+  const nowFav = currentFavs.includes(data.id);
+  const favBtn = qs('#detailFavBtn');
 
-    favBtn.classList.toggle('active', nowFav);
-    favBtn.innerHTML = `<i class="fa-${nowFav ? 'solid' : 'regular'} fa-heart"></i>`;
-  });
+  favBtn.classList.toggle('active', nowFav);
+  favBtn.innerHTML = `<i class="fa-${nowFav ? 'solid' : 'regular'} fa-heart"></i>`;
+});
 
-  refreshMessageBadge();
+qs('#detailInterestBtn')?.addEventListener('click', async () => {
+  const user = await getSessionUser();
+
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const payload = {
+    user_id: user.id,
+    sender_role: 'user',
+    message: `${data.brand || ''} ${data.model || ''} ${data.year ? '(' + data.year + ')' : ''} elanına maraqlanıram. Zəhmət olmasa mənimlə əlaqə saxlayın.`,
+    message_text: `${data.brand || ''} ${data.model || ''} ${data.year ? '(' + data.year + ')' : ''} elanına maraqlanıram. Zəhmət olmasa mənimlə əlaqə saxlayın.`,
+    elan_id: data.id,
+    is_read: false
+  };
+
+  const { error } = await supabaseClient.from('messages').insert(payload);
+
+  if (!error) {
+    alert('Mesaj adminə göndərildi.');
+    await refreshMessageBadge();
+  } else {
+    alert(`Xəta: ${error.message}`);
+  }
+});
+
+refreshMessageBadge();
+
 }
 
 
