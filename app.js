@@ -823,6 +823,52 @@ function bindFavoriteButtons(root = document) {
   });
 }
 
+
+function bindInterestButtons(root = document) {
+  qsa('[data-interest]', root).forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const listingId = btn.dataset.interest;
+      const user = await getSessionUser();
+
+      if (!user) {
+        location.href = 'login.html';
+        return;
+      }
+
+      const { data: item } = await supabaseClient
+        .from('elanlar')
+        .select('*')
+        .eq('id', listingId)
+        .maybeSingle();
+
+      if (!item) return;
+
+      const text = `${item.brand || ''} ${item.model || ''} ${item.year ? '(' + item.year + ')' : ''} elanına maraqlanıram. Zəhmət olmasa mənimlə əlaqə saxlayın.`;
+
+      const { error } = await supabaseClient.from('messages').insert({
+        user_id: user.id,
+        sender_role: 'user',
+        message: text,
+        message_text: text,
+        elan_id: item.id,
+        is_read: false
+      });
+
+      if (!error) {
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> Göndərildi`;
+        btn.disabled = true;
+        await refreshMessageBadge();
+      }
+    });
+  });
+}
+
+
+
+
 async function fetchListings(filters = {}) {
   let query = supabaseClient
     .from('elanlar')
@@ -894,9 +940,11 @@ function renderListingGrid(listings, favoriteIds, grid) {
     grid.innerHTML = '<div class="empty-state">Uyğun elan tapılmadı.</div>';
     return;
   }
+  
   grid.innerHTML = listings.map(item => createCard(item, favoriteIds)).join('');
-  startCardSlides(grid);
-  bindFavoriteButtons(grid);
+    startCardSlides(grid);
+    bindFavoriteButtons(grid);
+    bindInterestButtons(grid);
 }
 
 function readFilters() {
