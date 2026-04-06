@@ -654,9 +654,12 @@ async function markConversationRead(chatUserId, viewerRole) {
 
 
 
-
+/* İndex.html də göstəriləcək xəbər kartı stili */
 function createCard(item, favoriteIds = []) {
-  const images = Array.isArray(item.images) && item.images.length ? item.images : ['foto/car-placeholder.jpg'];
+  const images = Array.isArray(item.images) && item.images.length
+    ? item.images
+    : ['foto/car-placeholder.jpg'];
+
   const isFav = favoriteIds.includes(item.id);
 
   const conditionText =
@@ -665,12 +668,18 @@ function createCard(item, favoriteIds = []) {
     (item.condition || 'Sürülmüş');
 
   return `
-    <article class="card listing-card" data-id="${item.id}">
-      <div class="card-media" data-slider='${JSON.stringify(images)}'>
+    <article class="card listing-card listing-card-pro" data-id="${item.id}">
+      <a class="card-media card-media-link" href="elan.html?id=${item.id}" data-slider='${JSON.stringify(images)}'>
         <img src="${images[0]}" alt="${item.brand} ${item.model}">
-        
+
+        ${item.is_vip ? `
+          <span class="vip-badge card-vip-badge">
+            <i class="fa-solid fa-crown"></i> VIP
+          </span>
+        ` : ''}
+
         <div class="card-topbadges card-topfav-only">
-          <button class="favorite-btn ${isFav ? 'active' : ''}" data-fav="${item.id}" type="button">
+          <button class="favorite-btn ${isFav ? 'active' : ''}" data-fav="${item.id}" type="button" aria-label="Sevimli">
             <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
           </button>
         </div>
@@ -678,16 +687,16 @@ function createCard(item, favoriteIds = []) {
         <div class="slide-dots">
           ${images.map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('')}
         </div>
-      </div>
+      </a>
 
-      <div class="card-body listing-card-body">
-        <div class="listing-main-text">
+      <div class="card-body listing-card-body listing-card-body-pro">
+        <a class="listing-main-text listing-main-link" href="elan.html?id=${item.id}">
           <div class="price">${fmt(item.price, item.currency)}</div>
-          <div class="card-title">${item.brand} ${item.model}</div>
-        </div>
+          <div class="card-title">${item.brand || '-'} ${item.model || ''}</div>
+        </a>
 
-        <div class="listing-flags">
-          <span class="listing-flag condition-flag">
+        <div class="listing-flags listing-flags-pro">
+          <span class="listing-flag condition-flag condition-${conditionText.toLowerCase()}">
             <i class="fa-solid fa-car-side"></i> ${conditionText}
           </span>
 
@@ -704,30 +713,32 @@ function createCard(item, favoriteIds = []) {
           ` : ''}
         </div>
 
-        <div class="specs compact-specs">
-        
-          <div class="spec"><small>İl</small><strong>${item.year || '-'}</strong></div>
-          <div class="spec"><small>Yürüş</small><strong>${Number(item.mileage || 0).toLocaleString('az-AZ')} km</strong></div>
-          
+        <div class="listing-meta-row">
+          <span><i class="fa-regular fa-calendar"></i> ${item.year || '-'}</span>
+          <span><i class="fa-solid fa-road"></i> ${Number(item.mileage || 0).toLocaleString('az-AZ')} km</span>
         </div>
 
-        <div class="card-footer listing-card-footer">
-          <a class="btn btn-outline" href="elan.html?id=${item.id}">
-            <i class="fa-solid fa-eye"></i> Ətraflı bax
-          </a>
+        <div class="card-footer listing-card-footer listing-card-footer-pro">
+          <button class="btn btn-outline interest-btn" type="button" data-interest="${item.id}">
+            <i class="fa-regular fa-paper-plane"></i> Maraqlanıram
+          </button>
 
           <a
             class="btn btn-green whatsapp-card-btn"
             target="_blank"
-            href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${item.brand} ${item.model} (${item.year}) elanıyla maraqlanıram.`)}"
+            href="https://wa.me/994517089500?text=${encodeURIComponent(`Salam, ${item.brand} ${item.model} ${item.year ? '(' + item.year + ')' : ''} elanıyla maraqlanıram.`)}"
           >
-            <i class="fa-brands fa-whatsapp"></i>
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
           </a>
         </div>
       </div>
     </article>
   `;
 }
+
+
+
+
 
 function startCardSlides(root = document) {
   qsa('.card-media', root).forEach(media => {
