@@ -2215,7 +2215,7 @@ select option { color: #111; }
   }
 
   .vip-filter-btn {
-    width: 100%;                   /* Telefonda tam en */
+    /*width: 100%;                   /* Telefonda tam en */
     max-width: none;
     white-space: normal;
   }
