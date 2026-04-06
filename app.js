@@ -910,7 +910,6 @@ function readFilters() {
     seatsMax: qs('#filterSeatsMax')?.value || '',
     credit: qs('#filterCredit')?.checked || false,
     barter: qs('#filterBarter')?.checked || false,
-    vip: qs('#filterVip')?.checked || false,
     damage: qs('#filterDamage')?.checked || false,
     painted: qs('#filterPainted')?.checked || false,
     equipment: qsa('#filterEquipmentGrid input:checked').map(x => x.value)
