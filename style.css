@@ -2222,14 +2222,162 @@ select option { color: #111; }
 }
 
 
-
-
 @media (min-width: 641px) {
   .search-btn-mobile {
     width: 130px;
     max-width: 130px;
   }
 }
+
+
+/* İndex.html də olan Son elan kart stili */
+.listing-card-pro {
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.listing-card-pro:hover {
+  transform: translateY(-2px);
+  border-color: rgba(227,10,23,.24);
+  box-shadow: 0 16px 36px rgba(0,0,0,.40);
+}
+
+.card-media-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-vip-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+}
+
+.listing-main-link {
+  display: grid;
+  gap: 4px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.listing-card-body-pro {
+  gap: 10px;
+}
+
+.listing-flags-pro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.condition-flag {
+  border-color: rgba(255,255,255,.18);
+  color: #fff;
+}
+
+.condition-yeni {
+  border-color: rgba(255,193,7,.58);
+  color: #fff1a8;
+  box-shadow:
+    0 0 8px rgba(255,193,7,.20),
+    0 0 18px rgba(255,193,7,.10);
+}
+
+.listing-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #d7d7d7;
+  font-size: 13px;
+}
+
+.listing-meta-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.listing-card-footer-pro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.interest-btn {
+  min-width: 0;
+}
+
+.whatsapp-card-btn {
+  min-width: 0;
+}
+
+.whatsapp-card-btn i,
+.interest-btn i {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .listing-card-body-pro {
+    gap: 8px;
+  }
+
+  .listing-main-text .price {
+    font-size: 18px;
+  }
+
+  .listing-main-text .card-title {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  .listing-flags-pro {
+    gap: 6px;
+  }
+
+  .listing-flag {
+    min-height: 30px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+
+  .listing-meta-row {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .listing-meta-row span {
+    min-height: 28px;
+    padding: 0 8px;
+  }
+
+  .listing-card-footer-pro {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .listing-card-footer-pro .btn {
+    min-height: 40px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  .whatsapp-card-btn i,
+  .interest-btn i {
+    font-size: 14px;
+  }
+}
+
+
+
 
 
 
