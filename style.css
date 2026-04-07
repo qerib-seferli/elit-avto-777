@@ -17,8 +17,11 @@
 html, body { overflow-x: hidden; }
 body {
   font-family: Inter, "Segoe UI", Arial, sans-serif;
-  background: var(--bg); /* Gradientləri sildik */
-  color: #111111; /* Yazıların görünməsi üçün tünd rəng etmək vacibdir */
+  background:
+    radial-gradient(circle at top right, rgba(227,10,23,.16), transparent 18%),
+    radial-gradient(circle at top left, rgba(227,10,23,.10), transparent 22%),
+    var(--bg);
+  color: var(--text);
   min-height: 100vh;
 }
 img { max-width: 100%; display: block; }
