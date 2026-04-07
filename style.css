@@ -1,8 +1,8 @@
 :root {
   --bg: #121212;
   --panel: #191919;
-  --panel-2: #212121;
-  --text: #f3f3f3;
+  --panel-2: #ffffff;
+  --text: #121212;
   --muted: #a7a7a7;
   --red: #E30A17;
   --red-soft: rgba(227,10,23,.15);
