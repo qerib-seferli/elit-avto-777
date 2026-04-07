@@ -188,7 +188,7 @@ async function requireAdmin() {
   if (!user) return null;
   const profile = await getProfile(user.id);
   if (profile?.role !== 'admin') {
-    alert('Bu bölmə yalnız admin üçündür.');
+    showToast('Bu bölmə yalnız admin üçündür.', 'error', 'Giriş məhduddur');
     location.href = 'index.html';
     return null;
   }
@@ -215,6 +215,70 @@ function escapeHtml(value = '') {
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 }
+
+/* GitHub mesajlarını bloklama və öz mesajlarımızı yazdırma */
+function ensureToastStack() {
+  let stack = qs('#toastStack');
+  if (!stack) {
+    stack = document.createElement('div');
+    stack.id = 'toastStack';
+    stack.className = 'toast-stack';
+    document.body.appendChild(stack);
+  }
+  return stack;
+}
+
+function showToast(message, type = 'info', title = '') {
+  const stack = ensureToastStack();
+
+  const meta = {
+    success: { icon: 'fa-check', title: title || 'Uğurlu əməliyyat' },
+    error: { icon: 'fa-xmark', title: title || 'Xəta baş verdi' },
+    info: { icon: 'fa-bell', title: title || 'Məlumat' }
+  };
+
+  const cfg = meta[type] || meta.info;
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <div class="toast-icon"><i class="fa-solid ${cfg.icon}"></i></div>
+    <div class="toast-text">
+      <strong>${escapeHtml(cfg.title)}</strong>
+      <p>${escapeHtml(message || '')}</p>
+    </div>
+    <button class="toast-close" type="button"><i class="fa-solid fa-xmark"></i></button>
+  `;
+
+  const removeToast = () => {
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 180);
+  };
+
+  qs('.toast-close', toast)?.addEventListener('click', removeToast);
+
+  stack.appendChild(toast);
+  setTimeout(removeToast, 3200);
+}
+
+function setInlineMessage(selector, message, type = 'info') {
+  const el = typeof selector === 'string' ? qs(selector) : selector;
+  if (!el) return;
+
+  el.textContent = message || '';
+  el.classList.add('form-status');
+  el.classList.remove('is-success', 'is-error', 'is-info');
+
+  if (type === 'success') el.classList.add('is-success');
+  else if (type === 'error') el.classList.add('is-error');
+  else el.classList.add('is-info');
+}
+
+function notify(message, type = 'info', inlineSelector = null, title = '') {
+  if (inlineSelector) setInlineMessage(inlineSelector, message, type);
+  showToast(message, type, title);
+}
+
 
 
 
@@ -1098,7 +1162,12 @@ async function initLogin() {
       email: qs('#loginEmail').value.trim(),
       password: qs('#loginPassword').value,
     });
-    authMsg.textContent = error ? error.message : 'Giriş uğurludur. Yönləndirilirsiniz...';
+        notify(
+      error ? error.message : 'Giriş uğurludur. Yönləndirilirsiniz...',
+      error ? 'error' : 'success',
+      '#authMsg',
+      error ? 'Xəta' : 'Uğurlu giriş'
+      );
     if (!error) setTimeout(() => location.href = 'profile.html', 700);
   });
 
@@ -1113,7 +1182,14 @@ async function initLogin() {
       password,
       options: { data: { name, surname } }
     });
-    authMsg.textContent = error ? error.message : 'Qeydiyyat uğurludur. Email təsdiqi tələb oluna bilər.';
+    notify(
+    error
+      ? error.message
+      : 'Qeydiyyat uğurludur. Email təsdiqi tələb oluna bilər.',
+    error ? 'error' : 'success',
+    '#authMsg',
+    error ? 'Qeydiyyat xətası' : 'Qeydiyyat uğurlu'
+  );
     if (data?.user) await ensureProfile(data.user, { name, surname, email });
   });
 }
@@ -1154,7 +1230,12 @@ async function initProfile() {
         role: profile?.role || 'user',
       };
       const { error } = await supabaseClient.from('users').upsert(payload);
-      qs('#profileMsg').textContent = error ? error.message : 'Profil uğurla yeniləndi.';
+          notify(
+          error ? error.message : 'Profil uğurla yeniləndi.',
+          error ? 'error' : 'success',
+          '#profileMsg',
+          error ? 'Xəta' : 'Profil yeniləndi'
+        );
       if (!error && avatarUrl) qs('#avatarPreview').src = avatarUrl;
     } catch (err) {
       qs('#profileMsg').textContent = err.message;
@@ -1165,8 +1246,8 @@ async function initProfile() {
     const email = qs('#profileEmail')?.value?.trim();
     const msgEl = qs('#profileMsg');
 
-    if (!email) {
-      if (msgEl) msgEl.textContent = 'Email tapılmadı.';
+      if (!email) {
+      notify('Email tapılmadı.', 'error', msgEl, 'Xəta');
       return;
     }
 
@@ -1174,11 +1255,14 @@ async function initProfile() {
       redirectTo: 'https://qerib-seferli.github.io/elit-avto-777/reset-password.html'
     });
 
-    if (msgEl) {
-      msgEl.textContent = error
+      notify(
+      error
         ? `Xəta: ${error.message}`
-        : 'Şifrə yeniləmə linki email ünvanınıza göndərildi.';
-    }
+        : 'Şifrə yeniləmə linki email ünvanınıza göndərildi.',
+      error ? 'error' : 'success',
+      msgEl,
+      error ? 'Xəta' : 'Email göndərildi'
+    );
   });
 
   qs('#logoutBtn')?.addEventListener('click', async () => {
@@ -1216,30 +1300,35 @@ async function initResetPassword() {
     const confirmNewPassword = qs('#confirmNewPassword')?.value?.trim();
 
     if (!newPassword || !confirmNewPassword) {
-      msgEl.textContent = 'Bütün sahələri doldurun.';
-      return;
-    }
+    notify('Bütün sahələri doldurun.', 'error', msgEl, 'Xəta');
+    return;
+  }
 
     if (newPassword.length < 6) {
-      msgEl.textContent = 'Şifrə ən azı 6 simvol olmalıdır.';
-      return;
-    }
+    notify('Şifrə ən azı 6 simvol olmalıdır.', 'error', msgEl, 'Xəta');
+    return;
+  }
 
     if (newPassword !== confirmNewPassword) {
-      msgEl.textContent = 'Şifrələr eyni deyil.';
-      return;
-    }
+    notify('Şifrələr eyni deyil.', 'error', msgEl, 'Xəta');
+    return;
+  }
 
     const { error } = await supabaseClient.auth.updateUser({
       password: newPassword
     });
 
     if (error) {
-      msgEl.textContent = `Xəta: ${error.message}`;
-      return;
-    }
+    notify(`Xəta: ${error.message}`, 'error', msgEl, 'Xəta');
+    return;
+  }
 
-    msgEl.textContent = 'Şifrəniz uğurla yeniləndi. İndi yeni şifrə ilə daxil ola bilərsiniz.';
+    notify(
+    'Şifrəniz uğurla yeniləndi. İndi yeni şifrə ilə daxil ola bilərsiniz.',
+    'success',
+    '#resetPasswordMsg',
+    'Şifrə yeniləndi'
+  );
 
     setTimeout(() => {
       window.location.href = 'login.html';
@@ -1453,11 +1542,11 @@ qs('#detailInterestBtn')?.addEventListener('click', async () => {
   const { error } = await supabaseClient.from('messages').insert(payload);
 
   if (!error) {
-    alert('Mesaj adminə göndərildi.');
-    await refreshMessageBadge();
-  } else {
-    alert(`Xəta: ${error.message}`);
-  }
+  showToast('Mesaj adminə göndərildi.', 'success', 'Göndərildi');
+  await refreshMessageBadge();
+} else {
+  showToast(error.message || 'Mesaj göndərilmədi.', 'error', 'Xəta');
+}
 });
 
 refreshMessageBadge();
@@ -2124,9 +2213,14 @@ async function initAdmin() {
       error = res.error;
     }
 
-    qs('#adminMsg').textContent = error
-      ? `Xəta: ${error.message}`
-      : (id ? 'Elan uğurla redaktə olundu.' : 'Yeni elan uğurla əlavə olundu.');
+      notify(
+      error
+        ? `Xəta: ${error.message}`
+        : (id ? 'Elan uğurla redaktə olundu.' : 'Yeni elan uğurla əlavə olundu.'),
+      error ? 'error' : 'success',
+      '#adminMsg',
+      error ? 'Xəta' : 'Admin əməliyyatı'
+    );
 
     if (!error) {
       clearAdminListingForm();
