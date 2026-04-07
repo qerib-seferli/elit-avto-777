@@ -1,13 +1,13 @@
 :root {
-  --bg: #d9d7d7;
-  --panel: #f5f5f5;
-  --panel-2: #eeeeee;
+  --bg: #111111fff;
+  --panel: #111111fff;
+  --panel-2: #111111fff;
   --text: #111111;
-  --muted: #666666;
+  --muted: #444444;
   --red: #E30A17;
   --red-soft: rgba(227,10,23,.15);
   --green: #28A745;
-  --border: rgba(0,0,0,.1);
+  --border: rgba(0,0,0,.10);
   --shadow: 0 12px 36px rgba(0,0,0,.5);
   --radius: 18px;
   --radius-sm: 14px;
@@ -30,7 +30,7 @@ input, select, textarea {
   min-width: 0;
   border: 1px solid rgba(255,255,255,.1);
   background: rgba(255,255,255,.04);
-  color: #fff;
+  color: #111111;
   border-radius: 14px;
   min-height: 48px;
   padding: 12px 14px;
@@ -85,7 +85,7 @@ select option { color: #111; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 44px; padding: 0 16px; color: #fff; border-radius: 14px;
+  min-height: 44px; padding: 0 16px; color: #111111; border-radius: 14px;
   background: linear-gradient(135deg, var(--red), #8f1218);
   box-shadow: 0 8px 20px rgba(227,10,23,.22);
   white-space: nowrap;
@@ -179,7 +179,7 @@ select option { color: #111; }
   box-shadow: inset 0 0 0 3px transparent;
 }
 .chip:has(input:checked) {
-  border-color: rgba(227,10,23,.55); background: rgba(227,10,23,.14); color: #fff;
+  border-color: rgba(227,10,23,.55); background: rgba(227,10,23,.14); color: #111111;
 }
 .chip:has(input:checked) .dot-radio {
   border-color: rgba(255,255,255,.9);
@@ -209,7 +209,7 @@ select option { color: #111; }
 }
 .icon-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .favorite-btn {
-  width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff;
+  width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,.55); color: #111111;
   border: 1px solid rgba(255,255,255,.15);
 }
 .favorite-btn.active { background: rgba(227,10,23,.85); }
@@ -219,10 +219,10 @@ select option { color: #111; }
 .slide-dots span {
   width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.35);
 }
-.slide-dots span.active { background: #fff; }
+.slide-dots span.active { background: #111111; }
 .card-body { padding: 14px; display: grid; gap: 12px; }
 .price-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.price { font-size: 21px; font-weight: 800; color: #fff; }
+.price { font-size: 21px; font-weight: 800; color: #111111; }
 .card-title { margin-top: 4px; font-weight: 700; line-height: 1.25; }
 .specs { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
 .spec {
@@ -311,7 +311,7 @@ select option { color: #111; }
   position: absolute; top: 6px; right: 50%; transform: translateX(18px);
   min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px;
   display: inline-flex; align-items: center; justify-content: center;
-  background: var(--red); color: #fff; font-size: 10px; font-weight: 700; border: 1px solid rgba(255,255,255,.12);
+  background: var(--red); color: #111111; font-size: 10px; font-weight: 700; border: 1px solid rgba(255,255,255,.12);
 }
 
 
@@ -353,7 +353,7 @@ select option { color: #111; }
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   background: #333232;
-  color: #fff;
+  color: #111111;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -443,7 +443,7 @@ select option { color: #111; }
 .listing-main-text .price {
   font-size: 22px;
   font-weight: 800;
-  color: #fff;
+  color: #111111;
   line-height: 1.1;
 }
 
@@ -471,7 +471,7 @@ select option { color: #111; }
   font-weight: 700;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
-  color: #fff;
+  color: #111111;
 }
 
 .condition-flag {
@@ -655,7 +655,7 @@ select option { color: #111; }
 .chat-thread-text strong {
   display: block;
   font-size: 14px;
-  color: #fff;
+  color: #111111;
   line-height: 1.25;
 }
 
@@ -683,7 +683,7 @@ select option { color: #111; }
   align-items: center;
   justify-content: center;
   background: var(--red);
-  color: #fff;
+  color: #111111;
   font-size: 11px;
   font-weight: 800;
 }
@@ -762,7 +762,7 @@ select option { color: #111; }
 .message-name {
   font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  color: #111111;
 }
 
 .message-role {
@@ -809,7 +809,7 @@ select option { color: #111; }
 
 .message-action-btn:hover {
   border-color: rgba(227,10,23,.38);
-  color: #fff;
+  color: #111111;
 }
 
 .chat-composer {
@@ -952,7 +952,7 @@ select option { color: #111; }
 .chat-thread-text strong {
   display: block;
   font-size: 14px;
-  color: #fff;
+  color: #111111;
   line-height: 1.25;
 }
 
@@ -980,7 +980,7 @@ select option { color: #111; }
   align-items: center;
   justify-content: center;
   background: var(--red);
-  color: #fff;
+  color: #111111;
   font-size: 11px;
   font-weight: 800;
 }
@@ -1057,7 +1057,7 @@ select option { color: #111; }
 .message-name {
   font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  color: #111111;
 }
 
 .message-role {
@@ -1104,7 +1104,7 @@ select option { color: #111; }
 
 .message-action-btn:hover {
   border-color: rgba(227,10,23,.38);
-  color: #fff;
+  color: #111111;
 }
 
 .chat-composer {
@@ -1430,7 +1430,7 @@ select option { color: #111; }
 }
 
 .user-name-stack strong {
-  color: #fff;
+  color: #111111;
   font-size: 14px;
   line-height: 1.2;
 }
@@ -1507,7 +1507,7 @@ select option { color: #111; }
   place-items: center;
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.12);
-  color: #fff;
+  color: #111111;
   z-index: 3;
 }
 
@@ -1576,7 +1576,7 @@ select option { color: #111; }
 }
 
 .user-modal-item strong {
-  color: #fff;
+  color: #111111;
   line-height: 1.45;
   word-break: break-word;
 }
@@ -1708,7 +1708,7 @@ select option { color: #111; }
   border-radius: 999px;
   font-size: 12px;
   font-weight: 800;
-  color: #fff4b1;
+  color: #1111114b1;
   border: 1px solid rgba(255,193,7,.50);
   background: linear-gradient(135deg, rgba(255,193,7,.20), rgba(227,10,23,.12));
   box-shadow:
@@ -1806,7 +1806,7 @@ select option { color: #111; }
   place-items: center;
   background: rgba(10,10,10,.62);
   border: 1px solid rgba(255,255,255,.14);
-  color: #fff;
+  color: #111111;
   box-shadow: 0 0 12px rgba(0,0,0,.22);
 }
 
@@ -1876,7 +1876,7 @@ select option { color: #111; }
   margin-top: 8px;
   font-size: 28px;
   font-weight: 800;
-  color: #fff;
+  color: #111111;
 }
 
 .detail-whatsapp-btn {
@@ -1921,7 +1921,7 @@ select option { color: #111; }
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.04);
-  color: #fff;
+  color: #111111;
   box-shadow: 0 0 10px rgba(255,255,255,.04);
 }
 
@@ -2165,8 +2165,8 @@ select option { color: #111; }
   padding: 10px 14px;              /* Bir az yığcam */
   font-weight: 700;
   font-size: 14px;
-  color: #121212;
-  background: linear-gradient(135deg, #ffd700, #ffcc00, #fff2a8);
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffd700, #ffcc00, #1111112a8);
   border: 1px solid rgba(255,215,0,.6);
   box-shadow:
     0 0 12px rgba(255,215,0,.35),
@@ -2264,8 +2264,8 @@ select option { color: #111; }
   left: 10px;
   z-index: 4;
 
-  background: linear-gradient(135deg, #ffd700, #ffcc00, #fff2a8); /* Gold fon */
-  color: #121212;
+  background: linear-gradient(135deg, #ffd700, #ffcc00, #1111112a8); /* Gold fon */
+  color: #ffffff;
   border: 1px solid rgba(255,215,0,.7);
   border-radius: 999px;
   padding: 6px 12px;
@@ -2327,14 +2327,14 @@ select option { color: #111; }
 /* Ümumi flag görünüşü */
 .condition-flag {
   border-color: rgba(255,255,255,.18);
-  color: #fff;
+  color: #111111;
 }
 
 
 /* Yeni badge sarı neon */
 .condition-yeni {
   border-color: rgba(255,193,7,.58);
-  color: #fff1a8;
+  color: #1111111a8;
   box-shadow:
     0 0 8px rgba(255,193,7,.20),
     0 0 18px rgba(255,193,7,.10);
@@ -2501,7 +2501,7 @@ select option { color: #111; }
   box-shadow:
     0 0 0 1px rgba(255,255,255,.02),
     0 12px 30px rgba(0,0,0,.35);
-  color: #fff;
+  color: #111111;
   transform: translateY(-6px);
   opacity: 0;
   animation: toastIn .22s ease forwards;
@@ -2555,7 +2555,7 @@ select option { color: #111; }
 }
 
 .toast-info .toast-icon {
-  color: #fff3bf;
+  color: #1111113bf;
   border-color: rgba(255,193,7,.38);
   box-shadow: 0 0 12px rgba(255,193,7,.16);
 }
@@ -2586,7 +2586,7 @@ select option { color: #111; }
   place-items: center;
   background: rgba(255,255,255,.04);
   border: 1px solid rgba(255,255,255,.08);
-  color: #fff;
+  color: #111111;
 }
 
 .toast.hide {
