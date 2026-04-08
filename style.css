@@ -3592,79 +3592,71 @@ select option {
    2) ELAN.HTML TELEFONDA DAŞMASIN
    3) ADMIN.HTML TELEFONDA DAŞMASIN
    4) AŞAĞI NAV-DA AKTİV OLANDA YALNIZ İCON RƏNGİ DƏYİŞSİN
-   5) SON ƏLAVƏ DÜZƏLİŞLƏR:
-      - MESSAGES kompüterdə sonradan balacalaşmasın
-      - Admin action buttonlar telefonda balaca olsun
-      - İstifadəçi "Ətraflı bax" daha səliqəli olsun
    ======================================================= */
 
 /* 1. messages.html kompüterdə balaca qalmasın */
 @media (min-width: 981px) {
   .chat-workspace,
   .admin-chat-workspace {
-    grid-template-columns: 380px minmax(0, 1fr) !important;
-    gap: 18px !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 18px;
+    align-items: stretch;
   }
 
   .chat-sidebar-panel,
   .chat-thread-panel {
-    min-height: 76vh !important;
-    width: 100% !important;
+    min-height: 76vh;
   }
 
   .chat-threads {
-    max-height: calc(76vh - 72px) !important;
+    max-height: calc(76vh - 72px);
   }
 
   .chat-messages {
-    min-height: 560px !important;
-    max-height: 68vh !important;
-    padding: 18px !important;
-    width: 100% !important;
+    min-height: 560px;
+    max-height: 68vh;
+    padding: 18px;
   }
 
   .message-bubble {
-    max-width: min(72%, 920px) !important;
-    padding: 14px 16px !important;
-    border-radius: 20px !important;
+    max-width: min(72%, 920px);
+    padding: 14px 16px;
+    border-radius: 20px;
   }
 
   .message-text {
-    font-size: 15px !important;
-    line-height: 1.6 !important;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .message-name {
-    font-size: 14px !important;
+    font-size: 14px;
   }
 
   .message-role {
-    font-size: 12px !important;
+    font-size: 12px;
   }
 
   .message-time {
-    font-size: 12px !important;
+    font-size: 12px;
   }
 
   .chat-composer {
-    padding: 14px 16px !important;
-    grid-template-columns: 1fr auto !important;
-    gap: 10px !important;
+    padding: 14px 16px;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
   }
 
   .chat-composer textarea,
   .chat-composer input {
-    min-height: 46px !important;
-    padding: 11px 13px !important;
+    min-height: 46px;
+    padding: 11px 13px;
   }
 
   .chat-composer .btn {
-    width: 48px !important;
-    min-width: 48px !important;
-    height: 46px !important;
+    width: 48px;
+    min-width: 48px;
+    height: 46px;
   }
 }
 
@@ -3949,58 +3941,21 @@ select option {
     white-space: nowrap;
   }
 
-  /* admin action düymələri telefonda yığcam olsun */
-  .admin-action-stack {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 6px !important;
-    width: 100% !important;
-    align-items: stretch !important;
-  }
-
-  .admin-action-stack .btn {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 32px !important;
-    height: 32px !important;
-    font-size: 10px !important;
-    padding: 0 6px !important;
-    border-radius: 10px !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    justify-content: center !important;
-  }
-
-  /* istifadəçi action düymələri */
+  .admin-action-stack,
   .user-actions {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 6px !important;
-    width: 100% !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
   }
 
+  .admin-action-stack .btn,
   .user-actions .btn {
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 32px !important;
-    height: 32px !important;
-    padding: 0 8px !important;
-    font-size: 10px !important;
-    border-radius: 10px !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    justify-content: center !important;
-  }
-
-  /* istifadəçidə ətraflı bax daha səliqəli */
-  .user-actions .btn:first-child {
-    background: linear-gradient(135deg, #2c8fff, #186ed1) !important;
-    color: #ffffff !important;
-    box-shadow: 0 6px 14px rgba(44, 143, 255, .18) !important;
+    width: 100%;
+    min-width: 0;
+    font-size: 11px;
+    min-height: 36px;
+    padding: 0 8px;
   }
 }
 
@@ -4034,20 +3989,6 @@ select option {
   .admin-users-table,
   .admin-listings-table {
     min-width: 520px !important;
-  }
-
-  .admin-action-stack {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 5px !important;
-  }
-
-  .admin-action-stack .btn,
-  .user-actions .btn {
-    min-height: 30px !important;
-    height: 30px !important;
-    font-size: 9px !important;
-    padding: 0 4px !important;
-    border-radius: 9px !important;
   }
 }
 
