@@ -2230,7 +2230,7 @@ select option { color: #111; }
 
 
 /* =======================================================
-   İNDEX.HTML → SON ELAN KARTLARI PREMIUM DİZAYN STİLİ
+   İNDEX.HTML → SON ELAN KARTLARI YENİ SADƏ DİZAYN
    ======================================================= */
 
 /* Kartın ümumi görünüşü */
@@ -2240,7 +2240,7 @@ select option { color: #111; }
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-/* Mouse üzərinə gələndə hover effekti */
+/* Hover effekti */
 .listing-card-pro:hover {
   transform: translateY(-2px);
   border-color: rgba(227,10,23,.18);
@@ -2255,28 +2255,39 @@ select option { color: #111; }
   position: relative;
 }
 
-/* VIP badge - sol yuxarı yığcam gold */
+/* Şəkil */
+.card-media-link img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+/* VIP tacı - sol yuxarı, yığcam gold */
 .card-vip-badge {
   position: absolute;
   top: 8px;
   left: 8px;
   z-index: 4;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
   background: linear-gradient(135deg, #ffd700, #ffcc00, #fff2a8);
   color: #111111;
   border: 1px solid rgba(255,215,0,.72);
-  border-radius: 999px;
-  padding: 4px 8px;
-  font-weight: 700;
-  font-size: 10px;
   box-shadow:
     0 0 8px rgba(255,215,0,.28),
     0 0 16px rgba(255,215,0,.14);
   animation: vipGlow 1.6s infinite alternate;
 }
 
-/* VIP tac ikonuna boşluq */
+/* Tac icon ölçüsü */
 .card-vip-badge i {
-  margin-right: 5px;
+  margin-right: 0;
+  font-size: 11px;
 }
 
 /* Gold neon animasiya */
@@ -2294,7 +2305,7 @@ select option { color: #111; }
   }
 }
 
-/* Sağ aşağı kredit/barter iconları */
+/* Sağ aşağı kredit / barter iconları */
 .card-corner-icons {
   position: absolute;
   right: 8px;
@@ -2304,6 +2315,7 @@ select option { color: #111; }
   gap: 6px;
 }
 
+/* Ümumi icon görünüşü */
 .corner-icon {
   width: 24px;
   height: 24px;
@@ -2315,15 +2327,17 @@ select option { color: #111; }
   box-shadow: 0 0 10px rgba(0,0,0,.12);
 }
 
+/* Kredit iconu */
 .credit-corner-icon {
   background: #66bb22;
 }
 
+/* Barter iconu */
 .barter-corner-icon {
   background: #f4a021;
 }
 
-/* Qiymət + marka model link hissəsi */
+/* Qiymət + marka model hissəsi */
 .listing-main-link {
   display: grid;
   gap: 4px;
@@ -2331,36 +2345,29 @@ select option { color: #111; }
   color: inherit;
 }
 
-/* Kart body boşluqları */
+/* Kart iç boşluqları */
 .listing-card-body-pro {
   gap: 8px;
 }
 
-/* Yeni / Sürülmüş hissəsi */
-.listing-flags-pro {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-/* Ümumi flag görünüşü */
-.condition-flag {
-  border-color: rgba(0,0,0,.10);
+/* Qiymət */
+.price {
+  font-size: 18px;
+  font-weight: 800;
   color: #111111;
-  background: rgba(0,0,0,.03);
+  line-height: 1.15;
 }
 
-/* Yeni badge sarı vurğu */
-.condition-yeni {
-  border-color: rgba(255,193,7,.50);
+/* Marka model */
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
   color: #111111;
-  box-shadow:
-    0 0 6px rgba(255,193,7,.14),
-    0 0 14px rgba(255,193,7,.08);
+  line-height: 1.25;
 }
 
-/* İl + yürüş hissəsi */
-.listing-meta-row {
+/* İl + mühərrik eyni sətirdə */
+.listing-info-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2370,29 +2377,29 @@ select option { color: #111; }
   font-size: 12px;
 }
 
-/* İl və yürüş badge görünüşü */
-.listing-meta-row span {
+/* İl və mühərrik sadə yazı formatında */
+.listing-info-row span {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  flex: 1;
   gap: 6px;
-  min-height: 30px;
-  padding: 0 8px;
-  border-radius: 999px;
+  flex: 1;
+  min-width: 0;
   white-space: nowrap;
-  background: rgba(0,0,0,.03);
-  border: 1px solid rgba(0,0,0,.08);
 }
 
-/* Mühərrik sətri */
-.listing-engine-row {
+/* Yürüş ayrıca ən sonda */
+.listing-mileage-row {
   display: flex;
   align-items: center;
+  color: #333333;
+  font-size: 12px;
+}
+
+.listing-mileage-row span {
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
-  font-size: 13px;
-  color: #222222;
-  min-height: 24px;
+  white-space: nowrap;
 }
 
 /* =======================================================
@@ -2400,65 +2407,75 @@ select option { color: #111; }
    ======================================================= */
 
 @media (max-width: 768px) {
+  /* Şəkil hündürlüyü */
+  .card-media-link img {
+    height: 165px;
+  }
+
+  /* Kart iç boşluqları */
   .listing-card-body-pro {
     gap: 7px;
   }
 
-  .listing-main-text .price {
-    font-size: 17px;
+  /* Qiymət */
+  .price {
+    font-size: 16px;
   }
 
-  .listing-main-text .card-title {
+  /* Marka model */
+  .card-title {
     font-size: 14px;
     line-height: 1.25;
   }
 
-  .listing-flags-pro {
+  /* İl + mühərrik */
+  .listing-info-row {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .listing-info-row span {
     gap: 5px;
   }
 
-  .listing-flag {
-    min-height: 28px;
-    padding: 0 8px;
-    font-size: 10px;
-  }
-
-  .listing-meta-row {
-    gap: 6px;
+  /* Yürüş */
+  .listing-mileage-row {
     font-size: 11px;
-    flex-wrap: nowrap;
-    justify-content: space-between;
   }
 
-  .listing-meta-row span {
-    min-height: 28px;
-    padding: 0 8px;
-    flex: 1;
-    white-space: nowrap;
-    justify-content: center;
-  }
-
-  .listing-engine-row {
-    font-size: 12px;
-  }
-
+  /* VIP tacı telefonda balacalaşır */
   .card-vip-badge {
-    font-size: 9px;
-    padding: 4px 7px;
-    top: 7px;
-    left: 7px;
+    width: 20px;
+    height: 20px;
+    top: 6px;
+    left: 6px;
   }
 
+  .card-vip-badge i {
+    font-size: 9px;
+  }
+
+  /* Ürək telefonda balacalaşır */
+  .favorite-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .favorite-btn i {
+    font-size: 13px;
+  }
+
+  /* Kredit / barter iconları telefonda balacalaşır */
   .corner-icon {
-    width: 22px;
-    height: 22px;
-    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    font-size: 8px;
   }
 
   .card-corner-icons {
-    right: 7px;
-    bottom: 9px;
-    gap: 5px;
+    right: 6px;
+    bottom: 8px;
+    gap: 4px;
   }
 }
 
