@@ -726,11 +726,6 @@ function createCard(item, favoriteIds = []) {
 
   const isFav = favoriteIds.includes(item.id);
 
-  const conditionText =
-    item.condition === 'new' ? 'Yeni' :
-    item.condition === 'used' ? 'Sürülmüş' :
-    (item.condition || 'Sürülmüş');
-
   return `
     <article class="card listing-card listing-card-pro" data-id="${item.id}">
       <a class="card-media card-media-link" href="elan.html?id=${item.id}" data-slider='${JSON.stringify(images)}'>
@@ -738,7 +733,7 @@ function createCard(item, favoriteIds = []) {
 
         ${item.is_vip ? `
           <span class="vip-badge card-vip-badge">
-            <i class="fa-solid fa-crown"></i> VIP
+            <i class="fa-solid fa-crown"></i>
           </span>
         ` : ''}
 
@@ -773,19 +768,13 @@ function createCard(item, favoriteIds = []) {
           <div class="card-title">${item.brand || '-'} ${item.model || ''}</div>
         </a>
 
-        <div class="listing-flags listing-flags-pro">
-          <span class="listing-flag condition-flag condition-${conditionText.toLowerCase()}">
-            <i class="fa-solid fa-car-side"></i> ${conditionText}
-          </span>
-        </div>
-
-        <div class="listing-meta-row">
+        <div class="listing-info-row">
           <span><i class="fa-regular fa-calendar"></i> ${item.year || '-'}</span>
-          <span><i class="fa-solid fa-road"></i> ${Number(item.mileage || 0).toLocaleString('az-AZ')} km</span>
+          <span><i class="fa-solid fa-gauge-high"></i> ${item.engine || '-'}</span>
         </div>
 
-        <div class="listing-engine-row">
-          <i class="fa-solid fa-gauge-high"></i> ${item.engine || '-'}
+        <div class="listing-mileage-row">
+          <span><i class="fa-solid fa-road"></i> ${Number(item.mileage || 0).toLocaleString('az-AZ')} km</span>
         </div>
       </div>
     </article>
