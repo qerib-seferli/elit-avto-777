@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qerib-seferli.github.io/elit-avto-777/sitemap.xml
