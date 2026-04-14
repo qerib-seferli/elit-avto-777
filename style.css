@@ -4050,6 +4050,14 @@ select option {
    TƏTBİQİ YÜKLƏ BUTONU STİLİ
    ----------------------------------------------------*/
 
+.pwa-install-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 14px;
+}
+
 #installAppBtn {
     display: none;
     align-items: center;
@@ -4070,4 +4078,14 @@ select option {
     transform: translateY(-2px) scale(1.03);
 }
 
-
+.ios-install-help {
+    display: none;
+    max-width: 320px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid rgba(255,255,255,0.12);
+}
